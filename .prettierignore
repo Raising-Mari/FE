@@ -1,0 +1,6 @@
+dist
+node_modules
+public/mockServiceWorker.js
+src/api/generated
+package-lock.json
+*.md
