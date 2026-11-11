@@ -16,7 +16,7 @@ npm test               # 테스트 (vitest)
 npm run build          # 배포용 빌드 (타입 검사 포함)
 npm run gen:api        # BE 가 떠 있을 때 Swagger 에서 API 타입 생성
 ```
-- BE 없이 화면을 만들려면 `.env`에서 `VITE_USE_MOCK=true`로 바꾼다 (MSW 목업).
+- BE 없이 화면을 만들려면 `.env`에서 `VITE_USE_MOCK=true`로 바꾼다 (MSW 목업). `.env`를 건드리기 싫으면 `.env.mock` 파일(내용 `VITE_USE_MOCK=true`, git에 올라가지 않음)을 만들고 `npm run dev -- --mode mock`으로 띄운다. 목업 모드에서는 화면 왼쪽 아래에 "시연 도구"(로그인·관리자·서버 끊김·로그인 만료 흉내)가 나온다.
 - 개발 서버는 `/api`를 `.env`의 `VITE_PROXY_TARGET`(BE 주소)로 넘긴다. Google 로그인에는 `VITE_GOOGLE_CLIENT_ID`가 필요하다(`.env.example`). 개발 중 색·부품은 `/styleguide`에서 본다.
 - PR을 올리기 전에 `npm run typecheck && npm run lint && npm test`가 통과해야 한다.
 
