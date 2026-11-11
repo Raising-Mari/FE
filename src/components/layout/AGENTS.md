@@ -9,4 +9,5 @@
 - `PublicShell`: 로그인 전 화면(첫 화면·로그인·가입). 가운데 정렬 1200px.
 - `Brand`: 헤더 왼쪽 마리 그림 + 서비스 이름(이름은 `lib/brand.ts`).
 - `NavItem`: 메뉴 한 항목. 현재 주소와 맞으면 활성 표시.
-- `AppLayout`: 지금은 임시 홈용 간단한 틀이다. 첫 실제 화면을 만들 때 `AppShell`로 바꾼다.
+
+이 틀들은 받은 대로 그리기만 한다. 실제로 쓰는 `PublicLayout`·`ProtectedLayout`(내 정보·메뉴 구성)은 `app/layouts.tsx`에 있다.

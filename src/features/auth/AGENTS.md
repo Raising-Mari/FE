@@ -3,6 +3,10 @@
 ## 화면 흐름
 학교 Google 로그인 → (처음이면) 닉네임 → 학과 선택·약관 동의 → 내 과목. **메일 인증 코드는 없다.**
 
+## 지금 있는 것
+- `api.ts`·`hooks/useMe.ts`: A-06 내 정보(`['me']`). 헤더 이름·관리자 메뉴·`RequireAdmin`이 같은 키를 쓴다. 토큰이 없으면 호출하지 않는다.
+- 로그인 화면(02)·가입(03)·시작(01)은 단계 2에서 만든다. 그때까지 `/`·`/login`·`/signup`은 `router.tsx`의 자리표시다.
+
 ## 규칙
 - 로그인은 **학교 Google 계정만**이다. Google 로그인 창에서 받은 ID 토큰을 `POST /api/auth/google`(A-01)로 보내고, 서버가 학교 도메인(`hd` = `mju.ac.kr`)을 검사한다. 로그인 창에 `hd`를 힌트로 넘기는 것은 편의일 뿐이고 보안은 서버 검사가 맡는다.
 - Google 클라이언트 ID는 `env.googleClientId`(`VITE_GOOGLE_CLIENT_ID`)로만 읽는다.
