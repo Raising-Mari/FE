@@ -1,17 +1,22 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { ApiError, NETWORK_ERROR_CODE } from '@/api/errors'
 import { AppShell } from '@/components/layout/AppShell'
 import { Brand } from '@/components/layout/Brand'
 import { NavItem } from '@/components/layout/NavItem'
 import { Avatar } from '@/components/ui/Avatar'
 import { Button } from '@/components/ui/Button'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Card } from '@/components/ui/Card'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Dialog } from '@/components/ui/Dialog'
 import { Disclosure } from '@/components/ui/Disclosure'
+import { ErrorState } from '@/components/ui/ErrorState'
 import { Pill } from '@/components/ui/Pill'
 import { Select } from '@/components/ui/Select'
+import { StateBox } from '@/components/ui/StateBox'
 import { TextInput } from '@/components/ui/TextInput'
 import { Textarea } from '@/components/ui/Textarea'
+import { Toast } from '@/components/ui/Toast'
 
 /** 개발 서버에서만 열리는 화면(`/styleguide`). 토큰·부품을 한눈에 보고, 시안과 나란히 비교할 때 쓴다. */
 
@@ -144,7 +149,7 @@ export function StyleguidePage() {
       }
       nav={
         <>
-          <NavItem to="/" end icon="○">
+          <NavItem to="/courses" end icon="○">
             내 과목
           </NavItem>
           <NavItem to="/styleguide" icon="▤">
@@ -234,6 +239,12 @@ export function StyleguidePage() {
                 비활성
               </Button>
             </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <ButtonLink to="/styleguide">이동하는 버튼 (링크)</ButtonLink>
+              <ButtonLink to="/styleguide" variant="secondary">
+                이동하는 보조 버튼
+              </ButtonLink>
+            </div>
             <div className="max-w-[360px]">
               <Button variant="cta" fullWidth>
                 시작하기
@@ -245,6 +256,38 @@ export function StyleguidePage() {
               <Avatar name="서연" />
             </div>
           </Card>
+        </Section>
+
+        <Section id="sg-states" title="상태 표시 · 알림">
+          <div className="grid grid-cols-3 gap-5">
+            <StateBox kind="loading" />
+            <StateBox
+              kind="error"
+              message="서버에서 답을 받지 못했어요. 잠시 뒤에 다시 시도해 주세요."
+              action={<Button variant="secondary">다시 시도</Button>}
+            />
+            <StateBox
+              kind="empty"
+              title="아직 노트가 없어요"
+              message="마리에게 가르치면 여기에 노트가 쌓여요."
+              action={<Button>가르치러 가기</Button>}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-5">
+            <ErrorState
+              error={new ApiError(0, { code: NETWORK_ERROR_CODE })}
+              onRetry={() => undefined}
+            />
+            <ErrorState error={new ApiError(409, { code: 'BATTLE_NOTES_REQUIRED' })} />
+          </div>
+          <div className="flex flex-col items-start gap-3">
+            <Toast kind="info" message="자료를 저장했어요." onClose={() => undefined} />
+            <Toast
+              kind="error"
+              message="저장하지 못했어요. 다시 시도해 주세요."
+              onClose={() => undefined}
+            />
+          </div>
         </Section>
 
         <Section id="sg-fields" title="입력">
