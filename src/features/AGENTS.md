@@ -15,4 +15,4 @@ features/<기능>/
 - 화면(`*Page.tsx`)은 데이터를 훅으로 받아 그리는 데 집중하고, 복잡한 계산은 `lib/`나 순수 함수로 뺀다.
 - 서버 응답 타입은 `api/generated`의 타입을 쓴다. (아직 생성 전이면 임시 타입을 `api.ts`에 두고 TODO를 남긴다)
 - 기능마다 화면 상태 4가지(로딩 / 에러 / 빈 상태 / 정상)를 모두 만든다.
-- 현재 기능: `home` · `auth` · `course` · `teaching` · `battle` · `review` · `ranking` (각 폴더의 `AGENTS.md` 참고)
+- 현재 기능: `home` · `auth` · `course` · `teaching` · `battle` · `review` · `ranking` (각 폴더의 `AGENTS.md` 참고). 개발 전용 화면 `styleguide`가 있다(배포에는 나가지 않는다).
