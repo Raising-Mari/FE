@@ -47,7 +47,11 @@ describe('ErrorState', () => {
 
   it('서버에 닿지 못하면 제목을 따로 쓴다', () => {
     render(<ErrorState error={new ApiError(0, { code: NETWORK_ERROR_CODE })} />)
-    expect(screen.getByRole('alert')).toHaveTextContent('서버에 연결할 수 없어요')
+    const alert = screen.getByRole('alert')
+    expect(alert).toHaveTextContent('서버에 연결할 수 없어요')
+    expect(alert).toHaveTextContent('인터넷 연결을 확인하고 다시 시도해 주세요.')
+    // 제목과 같은 문장을 본문에서 되풀이하지 않는다.
+    expect(screen.getAllByText(/서버에 연결할 수 없어요/)).toHaveLength(1)
   })
 
   it('다시 시도를 누르면 onRetry 를 부른다', async () => {
