@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { Card } from '@/components/ui/Card'
+import { SERVICE_NAME } from '@/lib/brand'
 import { fetchHealth } from './api'
 
 /** 임시 홈. FE-BE 연결 확인용으로, 실제 홈 화면을 만들 때 교체한다. */
@@ -8,7 +9,7 @@ export function HomePage() {
 
   return (
     <section className="space-y-4">
-      <h1 className="text-25 tracking-title text-ink">AI 제자</h1>
+      <h1 className="text-25 tracking-title text-ink">{SERVICE_NAME}</h1>
       <p className="text-12 text-subtle">내가 가르치면, 제자가 푼다.</p>
 
       <Card aria-live="polite" className="space-y-1">
