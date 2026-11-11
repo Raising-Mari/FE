@@ -49,8 +49,7 @@ export function Field({ label, hint, error, className, children }: FieldProps) {
 }
 
 /**
- * 한 줄 입력 요소(입력창·선택 상자)의 공통 모양. 높이 44px은 시안의 43~47px을 합친 값이고 터치 기준과도 같다.
- * 글자는 터치 화면에서 16px로 둔다. 그보다 작으면 iOS 사파리가 입력할 때 화면을 확대한다.
+ * 한 줄 입력 요소(입력창·선택 상자)의 공통 모양. 높이 44px은 시안의 43~47px을 합친 값이다.
  */
 export const controlClass =
-  'min-h-11 w-full rounded-md border border-line bg-surface-soft px-[13px] text-[16px] leading-tight text-ink placeholder:text-placeholder disabled:cursor-not-allowed disabled:opacity-45 aria-[invalid=true]:border-danger md:text-12'
+  'min-h-11 w-full rounded-md border border-line bg-surface-soft px-[13px] text-12 leading-tight text-ink placeholder:text-placeholder disabled:cursor-not-allowed disabled:opacity-45 aria-[invalid=true]:border-danger'

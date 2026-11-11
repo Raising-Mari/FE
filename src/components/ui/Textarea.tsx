@@ -13,7 +13,7 @@ export function Textarea({ label, hint, error, className, ...rest }: TextareaPro
     <Field label={label} hint={hint} error={error} className={className}>
       {(control) => (
         <textarea
-          className="min-h-16 w-full resize-y rounded-md border border-line-strong bg-surface p-3 text-[16px] leading-[1.8] text-ink placeholder:text-placeholder disabled:cursor-not-allowed disabled:opacity-45 aria-[invalid=true]:border-danger md:text-11"
+          className="min-h-16 w-full resize-y rounded-md border border-line-strong bg-surface p-3 text-11 leading-[1.8] text-ink placeholder:text-placeholder disabled:cursor-not-allowed disabled:opacity-45 aria-[invalid=true]:border-danger"
           {...rest}
           {...control}
         />

@@ -14,7 +14,7 @@ export function PublicShell({ brand, headerRight, footer, children }: PublicShel
   return (
     <div className="flex min-h-dvh flex-col bg-surface">
       <div className="mx-auto flex w-full max-w-public flex-1 flex-col">
-        <header className="flex h-public-header shrink-0 items-center justify-between gap-4 px-4 md:px-10">
+        <header className="flex h-public-header shrink-0 items-center justify-between gap-4 px-10">
           {brand}
           {headerRight}
         </header>

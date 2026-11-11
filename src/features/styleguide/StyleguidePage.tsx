@@ -1,17 +1,22 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { ApiError, NETWORK_ERROR_CODE } from '@/api/errors'
 import { AppShell } from '@/components/layout/AppShell'
 import { Brand } from '@/components/layout/Brand'
 import { NavItem } from '@/components/layout/NavItem'
 import { Avatar } from '@/components/ui/Avatar'
 import { Button } from '@/components/ui/Button'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Card } from '@/components/ui/Card'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Dialog } from '@/components/ui/Dialog'
 import { Disclosure } from '@/components/ui/Disclosure'
+import { ErrorState } from '@/components/ui/ErrorState'
 import { Pill } from '@/components/ui/Pill'
 import { Select } from '@/components/ui/Select'
+import { StateBox } from '@/components/ui/StateBox'
 import { TextInput } from '@/components/ui/TextInput'
 import { Textarea } from '@/components/ui/Textarea'
+import { Toast } from '@/components/ui/Toast'
 
 /** 개발 서버에서만 열리는 화면(`/styleguide`). 토큰·부품을 한눈에 보고, 시안과 나란히 비교할 때 쓴다. */
 
@@ -144,7 +149,7 @@ export function StyleguidePage() {
       }
       nav={
         <>
-          <NavItem to="/" end icon="○">
+          <NavItem to="/courses" end icon="○">
             내 과목
           </NavItem>
           <NavItem to="/styleguide" icon="▤">
@@ -165,7 +170,7 @@ export function StyleguidePage() {
         </header>
 
         <Section id="sg-colors" title="색">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 grid-cols-2">
             {COLOR_GROUPS.map((group) => (
               <Card key={group.title} className="flex flex-col gap-3">
                 <h3 className="text-11 text-muted">{group.title}</h3>
@@ -184,7 +189,7 @@ export function StyleguidePage() {
             {TYPE_SCALE.map((row) => (
               <div
                 key={row.token}
-                className="flex flex-col gap-1 border-b border-line-soft pb-4 last:border-b-0 last:pb-0 md:flex-row md:items-baseline md:gap-6"
+                className="flex items-baseline gap-6 border-b border-line-soft pb-4 last:border-b-0 last:pb-0"
               >
                 <p className="w-44 shrink-0 text-10 text-subtle">
                   {row.token} · {row.usage}
@@ -234,6 +239,12 @@ export function StyleguidePage() {
                 비활성
               </Button>
             </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <ButtonLink to="/styleguide">이동하는 버튼 (링크)</ButtonLink>
+              <ButtonLink to="/styleguide" variant="secondary">
+                이동하는 보조 버튼
+              </ButtonLink>
+            </div>
             <div className="max-w-[360px]">
               <Button variant="cta" fullWidth>
                 시작하기
@@ -247,8 +258,40 @@ export function StyleguidePage() {
           </Card>
         </Section>
 
+        <Section id="sg-states" title="상태 표시 · 알림">
+          <div className="grid grid-cols-3 gap-5">
+            <StateBox kind="loading" />
+            <StateBox
+              kind="error"
+              message="서버에서 답을 받지 못했어요. 잠시 뒤에 다시 시도해 주세요."
+              action={<Button variant="secondary">다시 시도</Button>}
+            />
+            <StateBox
+              kind="empty"
+              title="아직 노트가 없어요"
+              message="마리에게 가르치면 여기에 노트가 쌓여요."
+              action={<Button>가르치러 가기</Button>}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-5">
+            <ErrorState
+              error={new ApiError(0, { code: NETWORK_ERROR_CODE })}
+              onRetry={() => undefined}
+            />
+            <ErrorState error={new ApiError(409, { code: 'BATTLE_NOTES_REQUIRED' })} />
+          </div>
+          <div className="flex flex-col items-start gap-3">
+            <Toast kind="info" message="자료를 저장했어요." onClose={() => undefined} />
+            <Toast
+              kind="error"
+              message="저장하지 못했어요. 다시 시도해 주세요."
+              onClose={() => undefined}
+            />
+          </div>
+        </Section>
+
         <Section id="sg-fields" title="입력">
-          <Card className="grid gap-6 md:grid-cols-2">
+          <Card className="grid gap-6 grid-cols-2">
             <TextInput label="닉네임" placeholder="마리가 불러줄 이름" hint="2~10자" />
             <TextInput label="닉네임 (오류)" defaultValue="서" error="2자 이상 입력해 주세요." />
             <Select label="캐릭터" defaultValue="flower">
@@ -257,11 +300,11 @@ export function StyleguidePage() {
             </Select>
             <TextInput label="비활성" defaultValue="수정할 수 없어요" disabled />
             <Textarea
-              className="md:col-span-2"
+              className="col-span-2"
               label="복기 메모"
               placeholder="다음에는 어떻게 설명할까요?"
             />
-            <div className="flex flex-col gap-1 md:col-span-2">
+            <div className="col-span-2 flex flex-col gap-1">
               <Checkbox label="상대에게 내 배틀 노트 공개에 동의합니다." defaultChecked />
               <Checkbox label="자료를 사용할 권한이 있습니다." />
               <Checkbox label="비활성" disabled />
@@ -270,7 +313,7 @@ export function StyleguidePage() {
         </Section>
 
         <Section id="sg-cards" title="카드 · 안내 상자 · 접는 상자">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 grid-cols-3">
             <Card>
               <p className="text-14 text-ink">기본 카드</p>
               <p className="text-11 text-subtle">흰 바탕, 테두리 한 줄</p>

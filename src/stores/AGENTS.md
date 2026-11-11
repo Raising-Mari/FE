@@ -2,6 +2,7 @@
 
 - **정말 앱 전체가 공유하는 클라이언트 상태만** 둔다. (로그인 정보, 화면 테마 등)
 - 서버에서 가져온 데이터(과목 목록, 노트, 순위)는 여기에 복사해 두지 않는다. TanStack Query가 캐시한다.
+- 지금 있는 스토어: `authStore`(토큰·만료 표시), `toastStore`(화면 오른쪽 아래 알림, 최대 3개 — `toast.info/error`로 띄우고 표시는 `app/ToastViewport`).
 - 스토어 하나는 한 가지 주제만 다룬다. 화면 안에서만 쓰는 상태는 `useState`로 충분하다.
 - 컴포넌트에서는 필요한 값만 선택해서 쓴다. 예: `useAuthStore((s) => s.accessToken)`
 - 로그인 토큰은 `localStorage` 한 키에 저장해 새로고침 뒤에도 유지한다(팀 결정, `features/auth/AGENTS.md`). 그 외의 값은 저장하지 않는다.

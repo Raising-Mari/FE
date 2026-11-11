@@ -4,7 +4,7 @@
 
 ## 규칙
 - 색·간격은 Tailwind 클래스로 통일한다. 같은 모양의 버튼을 화면마다 새로 만들지 않고 여기 부품을 쓴다.
-- 키보드로 조작할 수 있어야 하고(`button`·`label` 같은 올바른 태그), 크기는 시안을 따른다(버튼 40px, 입력 44px). 데스크톱 전용이라 터치 기준(44px)은 적용하지 않는다. 지금 코드에 남은 좁은 화면용 분기(`min-h-11`, 입력 글자 16px)는 단계 1에서 정리한다.
+- 키보드로 조작할 수 있어야 하고(`button`·`label` 같은 올바른 태그), 크기는 시안을 따른다(버튼 40px, 입력 44px). 데스크톱 전용이라 터치 기준(44px)과 좁은 화면용 분기는 두지 않는다.
 - props는 필요한 것만 받는다. 부품 하나가 학습·배틀 같은 도메인 용어를 알면 안 된다.
 - 새 부품은 로딩·비활성·에러 상태까지 같이 만든다.
 - 부품을 추가하면 `features/styleguide/StyleguidePage.tsx`에도 한 줄 넣고, 동작이 있는 부품은 옆에 `이름.test.tsx`를 둔다.
@@ -13,12 +13,16 @@
 | 부품 | 용도 |
 |---|---|
 | `Button` | `primary` · `secondary` · `cta`(첫 화면 큰 버튼) · `link`. `loading` · `fullWidth` |
+| `ButtonLink` | 버튼 모양이지만 **다른 주소로 이동**하는 링크. 이동은 `Button`이 아니라 이것을 쓴다(새 탭·주소 복사가 되고 스크린리더가 링크로 읽는다). 모양은 `buttonStyles.ts`에서 `Button`과 같이 쓴다 |
 | `Pill` · `Avatar` · `Spinner` | 작은 표시 |
 | `TextInput` · `Select` · `Textarea` | 라벨·도움말·오류까지 포함. 라벨은 항상 보이고 `aria`로 이어진다 |
 | `Checkbox` | 라벨 전체가 눌린다 |
 | `Card` | `tone`: `default` · `soft`(안내 상자) · `tint`(배너) |
 | `Disclosure` | 눌러서 펼치는 상자(`details`) |
 | `Dialog` | 포커스 이동·Tab 가두기·Esc·바깥 클릭·포커스 복귀 |
+| `StateBox` | 로딩·에러·빈 상태를 본문 자리에 대신 놓는 상자(시안 26). **모든 기능 화면이 상태 4종을 이것으로 만든다** |
+| `ErrorState` | `StateBox` + 서버 오류 안내문(`api/errorMessages`) + 다시 시도 버튼. 서버에 못 닿으면 제목이 바뀐다(시안 29). `useQuery`의 `error`를 그대로 넘긴다 |
+| `Toast` | 알림 한 개(`info`·`error`). 띄우는 곳은 `app/ToastViewport`, 띄우는 법은 `stores/toastStore`의 `toast.info/error` |
 | `Field` | 새 입력 부품을 만들 때 쓰는 라벨·도움말·오류 틀 (`controlClass`로 모양을 맞춘다) |
 
 시안에 있지만 아직 만들지 않은 요소는 `docs/디자인 시스템 정리.md` 5번 항목에 있다.

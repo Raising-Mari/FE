@@ -20,7 +20,7 @@ const tones: Record<Tone, string> = {
 const paddings: Record<Padding, string> = {
   none: '',
   sm: 'p-[15px]',
-  md: 'p-5 md:p-[26px]',
+  md: 'p-[26px]',
 }
 
 export function Card({

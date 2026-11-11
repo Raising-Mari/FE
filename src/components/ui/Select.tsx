@@ -8,7 +8,7 @@ interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'id'
   error?: string
 }
 
-/** 브라우저 기본 선택 상자(키보드·모바일 선택창이 그대로 동작)에 화살표만 시안대로 그린다. */
+/** 브라우저 기본 선택 상자(키보드 조작이 그대로 동작)에 화살표만 시안대로 그린다. */
 export function Select({ label, hint, error, className, children, ...rest }: SelectProps) {
   return (
     <Field label={label} hint={hint} error={error} className={className}>
