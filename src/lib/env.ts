@@ -3,6 +3,8 @@ export const env = {
   /** 비어 있으면 같은 출처(/api)로 요청한다. */
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? '',
   useMock: import.meta.env.VITE_USE_MOCK === 'true',
+  /** 학교 Google 로그인용 OAuth 클라이언트 ID. 브라우저에 공개되는 값이라 비밀값이 아니다. */
+  googleClientId: import.meta.env.VITE_GOOGLE_CLIENT_ID ?? '',
   /** 개발 서버로 열었을 때만 true. 스타일 가이드처럼 배포에 나가면 안 되는 화면을 가릴 때 쓴다. */
   isDev: import.meta.env.DEV,
 } as const
