@@ -1,6 +1,6 @@
 # FE (프론트엔드) 규칙
 
-AI 제자 서비스의 웹 화면. React 19 · TypeScript 7 · Vite 8 · Tailwind CSS 4 · TanStack Query · React Router 7.
+마리 키우기(학생이 AI 제자 마리를 가르치고 친구와 배틀하는 서비스)의 웹 화면. React 19 · TypeScript 7 · Vite 8 · Tailwind CSS 4 · TanStack Query · React Router 7.
 이 파일은 FE 전체에 적용된다. **폴더마다 `AGENTS.md`가 따로 있으니, 그 폴더의 파일을 고치기 전에 해당 `AGENTS.md`를 먼저 읽는다.**
 (Claude Code는 `CLAUDE.md`, Codex는 `AGENTS.md`를 읽는다. 내용은 `AGENTS.md` 한 곳에서만 고친다.)
 
@@ -17,6 +17,7 @@ npm run build          # 배포용 빌드 (타입 검사 포함)
 npm run gen:api        # BE 가 떠 있을 때 Swagger 에서 API 타입 생성
 ```
 - BE 없이 화면을 만들려면 `.env`에서 `VITE_USE_MOCK=true`로 바꾼다 (MSW 목업).
+- 개발 서버는 `/api`를 `.env`의 `VITE_PROXY_TARGET`(BE 주소)로 넘긴다. Google 로그인에는 `VITE_GOOGLE_CLIENT_ID`가 필요하다(`.env.example`). 개발 중 색·부품은 `/styleguide`에서 본다.
 - PR을 올리기 전에 `npm run typecheck && npm run lint && npm test`가 통과해야 한다.
 
 ## 폴더 구조 (`src/`)
@@ -42,9 +43,11 @@ npm run gen:api        # BE 가 떠 있을 때 Swagger 에서 API 타입 생성
 5. 환경변수는 `lib/env.ts`를 통해서만 읽는다. `import.meta.env`를 여기저기서 쓰지 않는다. `VITE_` 값은 브라우저에 공개되니 **비밀값을 넣지 않는다.**
 6. 의존 방향: `features` → `components`·`hooks`·`lib`·`api`. **`features`끼리 서로의 내부를 import하지 않는다.** 같이 쓸 것이 생기면 `components/`·`hooks/`·`lib/`로 올린다.
 7. **API 타입은 손으로 쓰지 않고** BE의 Swagger에서 `npm run gen:api`로 만든다. (자동 생성 파일은 직접 고치지 않는다)
-8. **모바일 우선**으로 만든다. 375px 폭에서 먼저 확인하고 넓은 화면으로 확장한다. 스타일은 Tailwind 클래스를 쓴다.
+8. **데스크톱 전용**으로 만든다(2026-11-11 팀 결정). 시안 폭 1440px을 기준으로 하고 모바일 대응은 하지 않는다. 스타일은 `@theme` 토큰 클래스를 쓴다(`styles/AGENTS.md`).
 9. **학생에게 숨겨야 하는 정보**(문제 은행의 문항·정답·개념 목록)를 화면·상태·콘솔 로그에 올리지 않는다. 서버가 주지 않은 것을 추측해서 보여 주지도 않는다.
 10. 새 API를 쓰는 화면을 만들면 `mocks/handlers.ts`에 같은 모양의 목업도 추가한다.
+11. 화면은 Figma 「디자인 시안」을 따른다. 시안에 없는 화면·상태는 Figma에 먼저 추가해 확인받은 뒤 구현한다.
+12. 서버에 아직 없는 API는 `api/pending.ts`에 임시 타입과 `TODO(BE)`를 남기고 목업으로 먼저 만든다. BE 코드는 이 레포에서 고치지 않는다.
 
 ## 코드 스타일
 - Prettier(`.prettierrc`)가 형식을 정한다: 세미콜론 없음, 작은따옴표, 2칸 들여쓰기. 직접 맞추지 말고 `npm run format`을 쓴다.
