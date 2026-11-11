@@ -11,7 +11,7 @@ export function Checkbox({ label, className, disabled, ...rest }: CheckboxProps)
   return (
     <label
       className={cx(
-        'flex min-h-11 items-start gap-3 py-2 text-12 text-ink md:min-h-0 md:py-0',
+        'flex items-start gap-3 text-12 text-ink',
         disabled ? 'cursor-not-allowed opacity-45' : 'cursor-pointer',
         className,
       )}

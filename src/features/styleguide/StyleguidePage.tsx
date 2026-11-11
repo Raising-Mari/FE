@@ -165,7 +165,7 @@ export function StyleguidePage() {
         </header>
 
         <Section id="sg-colors" title="색">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 grid-cols-2">
             {COLOR_GROUPS.map((group) => (
               <Card key={group.title} className="flex flex-col gap-3">
                 <h3 className="text-11 text-muted">{group.title}</h3>
@@ -184,7 +184,7 @@ export function StyleguidePage() {
             {TYPE_SCALE.map((row) => (
               <div
                 key={row.token}
-                className="flex flex-col gap-1 border-b border-line-soft pb-4 last:border-b-0 last:pb-0 md:flex-row md:items-baseline md:gap-6"
+                className="flex items-baseline gap-6 border-b border-line-soft pb-4 last:border-b-0 last:pb-0"
               >
                 <p className="w-44 shrink-0 text-10 text-subtle">
                   {row.token} · {row.usage}
@@ -248,7 +248,7 @@ export function StyleguidePage() {
         </Section>
 
         <Section id="sg-fields" title="입력">
-          <Card className="grid gap-6 md:grid-cols-2">
+          <Card className="grid gap-6 grid-cols-2">
             <TextInput label="닉네임" placeholder="마리가 불러줄 이름" hint="2~10자" />
             <TextInput label="닉네임 (오류)" defaultValue="서" error="2자 이상 입력해 주세요." />
             <Select label="캐릭터" defaultValue="flower">
@@ -257,11 +257,11 @@ export function StyleguidePage() {
             </Select>
             <TextInput label="비활성" defaultValue="수정할 수 없어요" disabled />
             <Textarea
-              className="md:col-span-2"
+              className="col-span-2"
               label="복기 메모"
               placeholder="다음에는 어떻게 설명할까요?"
             />
-            <div className="flex flex-col gap-1 md:col-span-2">
+            <div className="col-span-2 flex flex-col gap-1">
               <Checkbox label="상대에게 내 배틀 노트 공개에 동의합니다." defaultChecked />
               <Checkbox label="자료를 사용할 권한이 있습니다." />
               <Checkbox label="비활성" disabled />
@@ -270,7 +270,7 @@ export function StyleguidePage() {
         </Section>
 
         <Section id="sg-cards" title="카드 · 안내 상자 · 접는 상자">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 grid-cols-3">
             <Card>
               <p className="text-14 text-ink">기본 카드</p>
               <p className="text-11 text-subtle">흰 바탕, 테두리 한 줄</p>

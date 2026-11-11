@@ -75,7 +75,7 @@ export function Dialog({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex justify-center overflow-y-auto bg-overlay px-4 pt-[12vh] pb-8 md:pt-[180px]"
+      className="fixed inset-0 z-50 flex justify-center overflow-y-auto bg-overlay px-4 pt-[180px] pb-8"
       onMouseDown={(event) => {
         if (dismissible && event.target === event.currentTarget) onClose()
       }}
@@ -87,7 +87,7 @@ export function Dialog({
         aria-modal="true"
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="h-fit w-full max-w-dialog rounded-xl border border-line-strong bg-surface px-5 pt-6 pb-8 shadow-dialog outline-none md:px-7 md:pt-7 md:pb-[42px]"
+        className="h-fit w-full max-w-dialog rounded-xl border border-line-strong bg-surface px-7 pt-7 pb-[42px] shadow-dialog outline-none"
       >
         <div className="flex min-h-[43px] items-start justify-between gap-4">
           <h2 id={titleId} className="text-18 text-ink">
@@ -98,7 +98,7 @@ export function Dialog({
               type="button"
               aria-label="닫기"
               onClick={onClose}
-              className="-mt-2 -mr-3 grid size-11 shrink-0 place-items-center text-25 leading-none text-subtle hover:text-ink"
+              className="-mt-1 -mr-2 grid size-9 shrink-0 place-items-center text-25 leading-none text-subtle hover:text-ink"
             >
               ×
             </button>

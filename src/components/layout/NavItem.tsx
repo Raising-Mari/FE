@@ -11,7 +11,7 @@ interface NavItemProps {
   children: ReactNode
 }
 
-/** 사이드바·모바일 메뉴 줄의 한 항목. 현재 주소와 맞으면 `aria-current="page"` 와 파란 바탕이 붙는다. */
+/** 사이드바 메뉴의 한 항목. 현재 주소와 맞으면 `aria-current="page"` 와 파란 바탕이 붙는다. */
 export function NavItem({ to, icon, end, children }: NavItemProps) {
   return (
     <NavLink
@@ -19,7 +19,7 @@ export function NavItem({ to, icon, end, children }: NavItemProps) {
       end={end}
       className={({ isActive }) =>
         cx(
-          'flex min-h-11 shrink-0 items-center gap-2 rounded-md px-[15px] text-12 leading-tight whitespace-nowrap lg:min-h-[41px]',
+          'flex min-h-[41px] shrink-0 items-center gap-2 rounded-md px-[15px] text-12 leading-tight whitespace-nowrap',
           isActive ? 'bg-primary-tint text-primary' : 'text-muted hover:bg-surface-soft',
         )
       }
