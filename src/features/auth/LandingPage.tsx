@@ -20,7 +20,7 @@ export function LandingPage() {
           />
           <p className="text-12 text-muted">나의 작은 AI 제자, 마리</p>
         </div>
-        <div>
+        <div className="translate-x-10">
           <p className="text-11 tracking-eyebrow-wide text-primary-soft">TEACH. LEARN. GROW.</p>
           <h1 className="mt-5 text-38 tracking-hero text-navy-deep">
             내가 가르칠수록,
