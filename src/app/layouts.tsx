@@ -1,4 +1,4 @@
-import { Outlet, useParams } from 'react-router'
+import { Outlet } from 'react-router'
 import { AppShell } from '@/components/layout/AppShell'
 import { Brand } from '@/components/layout/Brand'
 import { NavItem } from '@/components/layout/NavItem'
@@ -8,6 +8,9 @@ import { ErrorState } from '@/components/ui/ErrorState'
 import { Pill } from '@/components/ui/Pill'
 import { StateBox } from '@/components/ui/StateBox'
 import { useMe } from '@/features/auth/hooks/useMe'
+import { SignupSessionProvider } from '@/features/auth/SignupSession'
+import { CourseNavigation } from '@/features/course/components/CourseNavigation'
+import { useSelectedCourse } from '@/features/course/hooks/useSelectedCourse'
 
 /** 로그인 전 화면(첫 화면·로그인·가입)과 404·만료 안내가 쓰는 틀. */
 export function PublicLayout() {
@@ -16,17 +19,19 @@ export function PublicLayout() {
       brand={<Brand />}
       headerRight={<span className="text-12 text-muted">한국어 · KR</span>}
     >
-      <Outlet />
+      <SignupSessionProvider>
+        <Outlet />
+      </SignupSessionProvider>
     </PublicShell>
   )
 }
 
 /**
  * 로그인 뒤 화면의 틀. 내 정보(`useMe`)를 헤더·메뉴에 쓰고, 정보를 받는 동안·실패했을 때는 본문 자리에 상태를 보여 준다.
- * 과목 메뉴는 주소에 과목(`:courseId`)이 있을 때만 나온다. 과목을 고르고 기억하는 일은 과목 단계에서 붙인다.
+ * 주소의 과목을 우선하고, 과목 주소가 아니면 내가 참여한 과목 중 마지막으로 선택한 과목을 보여 준다.
  */
 export function ProtectedLayout() {
-  const { courseId } = useParams()
+  const courseId = useSelectedCourse()
   const me = useMe()
   const isAdmin = me.data?.role === 'ADMIN'
   const course = courseId ? `/courses/${courseId}` : null
@@ -45,7 +50,7 @@ export function ProtectedLayout() {
           )}
         </div>
       }
-      sidebarTop={<p className="px-1 text-10 tracking-[0.12em] text-subtle">MY CLASSROOM</p>}
+      sidebarTop={<CourseNavigation courseId={courseId} />}
       nav={
         <>
           <NavItem to="/courses" end icon="⌂">

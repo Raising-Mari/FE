@@ -32,7 +32,7 @@ beforeEach(() => {
 describe('로그인 가드', () => {
   it('로그인하지 않고 로그인 영역을 열면 로그인 화면으로 보낸다', async () => {
     const router = renderAt('/courses/3/teach')
-    expect(await screen.findByText('로그인 화면을 준비하고 있어요')).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: '로그인' })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/login')
     // 로그인 뒤 돌아올 주소를 함께 넘긴다.
     expect(router.state.location.state).toEqual({ from: '/courses/3/teach' })

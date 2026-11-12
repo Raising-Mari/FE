@@ -5,6 +5,12 @@ import { SessionExpiredPage } from '@/features/system/SessionExpiredPage'
 import { env } from '@/lib/env'
 import { RequireAdmin, RequireAuth } from './guards'
 import { ProtectedLayout, PublicLayout } from './layouts'
+import { LandingPage } from '@/features/auth/LandingPage'
+import { LoginPage } from '@/features/auth/LoginPage'
+import { SignupPage } from '@/features/auth/SignupPage'
+import { CoursesPage } from '@/features/course/CoursesPage'
+import { CourseHomePage } from '@/features/course/CourseHomePage'
+import { RequireDisciple } from '@/features/course/RequireDisciple'
 
 /** 개발 서버에서만 여는 화면(스타일 가이드·서버 연결 확인). 배포에서는 라우트 자체가 없다. */
 const devRoutes: RouteObject[] = env.isDev
@@ -36,9 +42,9 @@ export const routes: RouteObject[] = [
   {
     element: <PublicLayout />,
     children: [
-      { path: '/', element: soon('시작') },
-      { path: '/login', element: soon('로그인') },
-      { path: '/signup', element: soon('가입') },
+      { path: '/', element: <LandingPage /> },
+      { path: '/login', element: <LoginPage /> },
+      { path: '/signup', element: <SignupPage /> },
       { path: '/session-expired', element: <SessionExpiredPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
@@ -49,11 +55,16 @@ export const routes: RouteObject[] = [
       {
         element: <ProtectedLayout />,
         children: [
-          { path: '/courses', element: soon('내 과목') },
-          { path: '/courses/:courseId', element: soon('과목 홈') },
-          { path: '/courses/:courseId/teach', element: soon('가르치기') },
+          { path: '/courses', element: <CoursesPage /> },
+          { path: '/courses/:courseId', element: <CourseHomePage /> },
+          {
+            element: <RequireDisciple />,
+            children: [
+              { path: '/courses/:courseId/teach', element: soon('가르치기') },
+              { path: '/courses/:courseId/battle', element: soon('제자 배틀') },
+            ],
+          },
           { path: '/courses/:courseId/materials', element: soon('학습 자료') },
-          { path: '/courses/:courseId/battle', element: soon('제자 배틀') },
           { path: '/courses/:courseId/records', element: soon('배틀 기록') },
           { path: '/courses/:courseId/ranking', element: soon('과목 랭킹') },
           { path: '/join/:code', element: soon('방 코드 입장') },
