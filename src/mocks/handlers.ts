@@ -3,6 +3,7 @@ import { MOCK_ME } from './fixtures'
 import { useScenario } from './scenario'
 import type { components } from '@/api/generated/schema'
 import { materialHandlers } from './materialHandlers'
+import { teachingHandlers } from './teachingHandlers'
 import { mockCourses, mockDisciples, mockUnits, mockNickname, setMockNickname } from './courseData'
 
 /** BE 의 `ErrorResponse` 와 같은 모양으로 오류를 만든다. 문구는 FE 가 코드로 만들어 쓰므로 `message` 는 참고용이다. */
@@ -186,4 +187,5 @@ export const handlers = [
     return HttpResponse.json(unit, { status: 201 })
   }),
   ...materialHandlers,
+  ...teachingHandlers,
 ]

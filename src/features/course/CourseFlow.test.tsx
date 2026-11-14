@@ -47,7 +47,7 @@ it('과목 생성 → 제자 생성 → 주차 생성 흐름이 연결되고 목
   await userEvent.click(
     within(screen.getByRole('dialog')).getByRole('button', { name: '주차 만들기' }),
   )
-  await screen.findByText('가르치기 화면을 준비하고 있어요')
+  await screen.findByRole('heading', { name: '설명하면서, 더 확실하게.' })
   expect(router.state.location.pathname).toBe('/courses/3/teach')
   expect(router.state.location.search).toMatch(/unitId=\d+/)
   expect(mockDisciples.get(3)?.name).toBe('콩이')
