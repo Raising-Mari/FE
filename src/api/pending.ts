@@ -1,30 +1,18 @@
 /**
- * TODO(BE): 서버에 아직 없는 API의 요청·응답 모양. (루트 `BE_변경_요청서.md` B절)
+ * TODO(BE): 서버에 아직 없는 API. (루트 `BE_변경_요청서.md` B절)
  *
- * 없는 경로: T-04 `GET /api/disciples/{id}/notes/{entryId}/history`, T-05 `POST /api/disciples/{id}/notes/merge`,
- * M-05 `DELETE /api/materials/{id}`, R-06 `GET /api/battles/{id}/opponent-notes`,
- * R-07 `POST /api/battles/{id}/note-reviews`, R-08 `GET /api/battles/{id}/note-reviews`, R-10 `GET /api/me/review-records`.
+ * 2026-11-14 기준 남은 것: T-04 `GET /api/disciples/{id}/notes/{entryId}/history`(노트 이력),
+ * M-05 `DELETE /api/materials/{id}`(자료 삭제), R-10 `GET /api/me/review-records`(복기 기록 모아 보기).
+ * T-05·R-06·R-07·R-08 은 서버에 올라와 `generated` 타입을 쓴다.
  *
- * BE 명세(`api-spec.md`)에 모양이 정해진 것만 적는다. T-04·R-06·R-08·R-10의 응답과 R-07의 응답은 명세에 없으므로
- * 여기서 지어내지 않고, 서버가 올라오면 `generated` 타입을 쓴다. 서버에 올라오면 `npm run gen:api`로 타입을 다시 만들고
- * 이 파일의 해당 항목을 지운다.
+ * 명세(`api-spec.md`)에 응답 모양이 없는 것은 여기서 지어내지 않는다. 화면은 서버가 404·405 를 주면
+ * "아직 지원하지 않아요"로 안내한다(`isNotSupported`).
  */
+import { ApiError } from './errors'
 
-/** T-05 요청: 확인 카드에서 학생이 "합치기"를 골랐을 때. 두 노트는 같은 제자·같은 주차의 ACTIVE 여야 한다. */
-export interface MergeNotesRequest {
-  keepEntryId: number
-  mergeEntryId: number
+/** 서버에 경로 자체가 없을 때의 응답인가. 미구현 API 를 부른 화면이 안내 문구를 고를 때 쓴다. */
+export function isNotSupported(error: unknown): boolean {
+  return error instanceof ApiError && (error.status === 404 || error.status === 405)
 }
 
-/** T-05 응답(200). 합쳐진 노트는 MERGED 가 되고 내용은 바뀌지 않는다. */
-export interface MergeNotesResponse {
-  keepEntryId: number
-  mergedEntryId: number
-}
-
-/** R-07 요청. 배틀당 1회(REVIEW_ALREADY_SUBMITTED), 두 사람이 모두 공개에 동의한 배틀에서만. */
-export interface CreateNoteReviewRequest {
-  goodPoints: string
-  suggestions: string
-  evidenceNoteEntryId?: number
-}
+export const NOT_SUPPORTED_MESSAGE = '아직 지원하지 않는 기능이에요. 곧 준비할게요.'
