@@ -59,7 +59,7 @@ it('처음 로그인하면 닉네임·학과·필수 동의 뒤 가입하고 토
 it('기존 사용자는 로그인 전에 가려던 내부 주소로 돌아간다', async () => {
   const router = open('/courses/1/teach?unitId=1')
   await userEvent.click(await screen.findByRole('button', { name: '학교 Google 계정으로 로그인' }))
-  await screen.findByText('가르치기 화면을 준비하고 있어요')
+  await screen.findByRole('heading', { name: '설명하면서, 더 확실하게.' })
   expect(router.state.location.pathname + router.state.location.search).toBe(
     '/courses/1/teach?unitId=1',
   )

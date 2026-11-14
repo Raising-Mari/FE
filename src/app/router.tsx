@@ -5,6 +5,7 @@ import { SessionExpiredPage } from '@/features/system/SessionExpiredPage'
 import { env } from '@/lib/env'
 import { RequireAdmin, RequireAuth } from './guards'
 import { ProtectedLayout, PublicLayout } from './layouts'
+import { TeachRoute } from './routeElements'
 import { LandingPage } from '@/features/auth/LandingPage'
 import { LoginPage } from '@/features/auth/LoginPage'
 import { SignupPage } from '@/features/auth/SignupPage'
@@ -61,7 +62,7 @@ export const routes: RouteObject[] = [
           {
             element: <RequireDisciple />,
             children: [
-              { path: '/courses/:courseId/teach', element: soon('가르치기') },
+              { path: '/courses/:courseId/teach', element: <TeachRoute /> },
               { path: '/courses/:courseId/battle', element: soon('제자 배틀') },
             ],
           },
