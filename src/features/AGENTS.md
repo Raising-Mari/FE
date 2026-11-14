@@ -11,8 +11,8 @@ features/<기능>/
 ```
 
 ## 규칙
-- **다른 기능의 내부 파일을 import하지 않는다.** 같이 쓸 것은 `components/`·`hooks/`·`lib/`로 올린다.
+- **다른 기능의 내부 파일을 import하지 않는다.** 같이 쓸 것은 `components/`·`hooks/`·`lib/`로 올린다. 두 기능을 이어야 하면(가르치기 화면의 주차 만들기 창, 관리자 화면의 고른 과목) `app/routeElements.tsx`에서 끼워 준다.
 - 화면(`*Page.tsx`)은 데이터를 훅으로 받아 그리는 데 집중하고, 복잡한 계산은 `lib/`나 순수 함수로 뺀다.
 - 서버 응답 타입은 `api/generated`의 타입을 쓴다. (아직 생성 전이면 임시 타입을 `api.ts`에 두고 TODO를 남긴다)
 - 기능마다 화면 상태 4가지(로딩 / 에러 / 빈 상태 / 정상)를 모두 만든다.
-- 현재 기능: `home` · `auth` · `course` · `teaching` · `battle` · `review` · `ranking` (각 폴더의 `AGENTS.md` 참고)
+- 현재 기능: `home` · `auth`(로그인·가입·내 정보) · `system` · `course` · `material` · `teaching` · `battle` · `review`(복기·연습 결과·노트 교환) · `ranking`(기록·랭킹) · `admin` (각 폴더의 `AGENTS.md` 참고). 개발 전용 화면 `styleguide`가 있다(배포에는 나가지 않는다).

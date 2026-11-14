@@ -20,6 +20,11 @@ apiClient.interceptors.response.use(
   (error: unknown) => {
     if (isAxiosError<Partial<ErrorResponse>>(error)) {
       if (error.response) {
+        // 토큰을 보냈는데 401이면 만료·폐기된 것이다. 여기서 한 번만 로그아웃 처리하고, 로그인 화면으로 보내는 일은
+        // 토큰이 사라진 것을 본 라우트 가드(app/guards.tsx)가 한다. (토큰 없이 부른 로그인 요청의 401은 해당 없음)
+        if (error.response.status === 401 && error.config?.headers?.Authorization) {
+          useAuthStore.getState().expire()
+        }
         return Promise.reject(new ApiError(error.response.status, error.response.data ?? {}))
       }
       return Promise.reject(
