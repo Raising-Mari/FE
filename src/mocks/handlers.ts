@@ -2,6 +2,7 @@ import { http, HttpResponse } from 'msw'
 import { MOCK_ME } from './fixtures'
 import { useScenario } from './scenario'
 import type { components } from '@/api/generated/schema'
+import { battleHandlers } from './battleHandlers'
 import { materialHandlers } from './materialHandlers'
 import { teachingHandlers } from './teachingHandlers'
 import { mockCourses, mockDisciples, mockUnits, mockNickname, setMockNickname } from './courseData'
@@ -188,4 +189,5 @@ export const handlers = [
   }),
   ...materialHandlers,
   ...teachingHandlers,
+  ...battleHandlers,
 ]
