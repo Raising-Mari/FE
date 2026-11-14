@@ -31,6 +31,12 @@ export async function checkNickname(nickname: string): Promise<boolean> {
   return data.available === true
 }
 
+/** A-07 닉네임·학과 수정. 바뀐 내 정보를 돌려준다. */
+export async function updateMe(input: components['schemas']['UpdateMeRequest']): Promise<Me> {
+  const { data } = await apiClient.patch<Me>('/api/me', input)
+  return data
+}
+
 /** A-06 내 정보. 로그인한 사람의 닉네임·학교·학과·역할을 돌려준다. */
 export async function fetchMe(): Promise<Me> {
   const { data } = await apiClient.get<Me>('/api/me')

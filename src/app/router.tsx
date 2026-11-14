@@ -18,6 +18,9 @@ import { BattleSetupPage } from '@/features/battle/BattleSetupPage'
 import { JoinPage } from '@/features/battle/JoinPage'
 import { PracticeResultPage } from '@/features/review/PracticeResultPage'
 import { ReviewPage } from '@/features/review/ReviewPage'
+import { MePage } from '@/features/auth/MePage'
+import { RankingPage } from '@/features/ranking/RankingPage'
+import { RecordsPage } from '@/features/ranking/RecordsPage'
 
 /** 개발 서버에서만 여는 화면(스타일 가이드·서버 연결 확인). 배포에서는 라우트 자체가 없다. */
 const devRoutes: RouteObject[] = env.isDev
@@ -72,13 +75,13 @@ export const routes: RouteObject[] = [
             ],
           },
           { path: '/courses/:courseId/materials', element: <MaterialsPage /> },
-          { path: '/courses/:courseId/records', element: soon('배틀 기록') },
-          { path: '/courses/:courseId/ranking', element: soon('과목 랭킹') },
+          { path: '/courses/:courseId/records', element: <RecordsPage /> },
+          { path: '/courses/:courseId/ranking', element: <RankingPage /> },
           { path: '/join/:code', element: <JoinPage /> },
           { path: '/battles/:battleId', element: <BattleRoomPage /> },
           { path: '/battles/:battleId/review', element: <ReviewPage /> },
           { path: '/battles/:battleId/result', element: <PracticeResultPage /> },
-          { path: '/me', element: soon('내 정보') },
+          { path: '/me', element: <MePage /> },
           {
             element: <RequireAdmin />,
             children: [{ path: '/admin', element: soon('운영·문제 점검') }],
