@@ -25,26 +25,11 @@ export async function createCourse(input: CreateCourseRequest): Promise<Course> 
   return data
 }
 
-export async function fetchCourse(courseId: number): Promise<Course> {
-  const { data } = await apiClient.get<Course>(`/api/courses/${courseId}`)
-  return data
-}
-
-export async function fetchDisciple(courseId: number): Promise<Disciple> {
-  const { data } = await apiClient.get<Disciple>(`/api/courses/${courseId}/disciple`)
-  return data
-}
-
 export async function createDisciple(
   courseId: number,
   input: CreateDiscipleRequest,
 ): Promise<Disciple> {
   const { data } = await apiClient.post<Disciple>(`/api/courses/${courseId}/disciple`, input)
-  return data
-}
-
-export async function fetchUnits(courseId: number): Promise<Unit[]> {
-  const { data } = await apiClient.get<Unit[]>(`/api/courses/${courseId}/units`)
   return data
 }
 

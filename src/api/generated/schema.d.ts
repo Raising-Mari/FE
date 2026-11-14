@@ -38,6 +38,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/disciples/{discipleId}/notes/merge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** T-05 확인 카드에서 노트 합치기 (내용은 그대로, merge 노트만 MERGED) */
+        post: operations["mergeNotes"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/disciples/{discipleId}/messages": {
         parameters: {
             query?: never;
@@ -213,6 +230,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/battles/{battleId}/note-reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** R-08 내가 쓴 / 받은 리뷰 */
+        get: operations["list"];
+        put?: never;
+        /** R-07 노트 교환 리뷰 작성 (배틀당 1회) */
+        post: operations["write"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/battles/{battleId}/cancel": {
         parameters: {
             query?: never;
@@ -340,7 +375,7 @@ export interface paths {
             cookie?: never;
         };
         /** X-03 문항 목록 (unitId·status, status=UNJUDGED 면 검수 대기) + 사용 횟수·정답률 */
-        get: operations["list"];
+        get: operations["list_1"];
         put?: never;
         /** X-06 문항 직접 추가 (source=MANUAL, 바로 VERIFIED) */
         post: operations["create_2"];
@@ -707,6 +742,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/battles/{battleId}/opponent-notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** R-06 상대 노트 (두 사람 모두 공개 동의 시, 준비 순간 스냅샷) */
+        get: operations["opponentNotes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/nicknames/availability": {
         parameters: {
             query?: never;
@@ -783,7 +835,7 @@ export interface paths {
             cookie?: never;
         };
         /** X-07 신고·이의제기 목록 (status) */
-        get: operations["list_1"];
+        get: operations["list_2"];
         put?: never;
         post?: never;
         delete?: never;
@@ -872,6 +924,18 @@ export interface components {
             aiMemo?: string;
             sourceNote?: string;
             reasonNote?: string;
+        };
+        MergeNotesRequest: {
+            /** Format: int64 */
+            keepEntryId: number;
+            /** Format: int64 */
+            mergeEntryId: number;
+        };
+        MergeNotesResponse: {
+            /** Format: int64 */
+            keepEntryId?: number;
+            /** Format: int64 */
+            mergedEntryId?: number;
         };
         SendMessageRequest: {
             /** Format: int64 */
@@ -1015,6 +1079,35 @@ export interface components {
         };
         ReadyRequest: {
             notesPublic?: boolean;
+        };
+        WriteNoteReviewRequest: {
+            goodPoints: string;
+            suggestions: string;
+            /** Format: int64 */
+            evidenceNoteEntryId?: number;
+        };
+        EvidenceNote: {
+            /** Format: int64 */
+            id?: number;
+            content?: string;
+        };
+        NoteReviewResponse: {
+            /** Format: int64 */
+            id?: number;
+            /** Format: int64 */
+            battleId?: number;
+            reviewer?: components["schemas"]["Person"];
+            target?: components["schemas"]["Person"];
+            goodPoints?: string;
+            suggestions?: string;
+            evidenceNote?: components["schemas"]["EvidenceNote"];
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        Person: {
+            /** Format: int64 */
+            userId?: number;
+            nickname?: string;
         };
         CreatePracticeRequest: {
             /** Format: int64 */
@@ -1565,6 +1658,21 @@ export interface components {
             /** Format: int32 */
             unknown?: number;
         };
+        Note: {
+            /** Format: int64 */
+            id?: number;
+            content?: string;
+        };
+        OpponentNotesResponse: {
+            /** Format: int64 */
+            battleId?: number;
+            opponent?: components["schemas"]["Opponent"];
+            notes?: components["schemas"]["Note"][];
+        };
+        NoteReviewsResponse: {
+            written?: components["schemas"]["NoteReviewResponse"];
+            received?: components["schemas"]["NoteReviewResponse"];
+        };
         NicknameAvailabilityResponse: {
             available?: boolean;
         };
@@ -1776,6 +1884,32 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["ReviewEntryResponse"];
+                };
+            };
+        };
+    };
+    mergeNotes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                discipleId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MergeNotesRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MergeNotesResponse"];
                 };
             };
         };
@@ -2151,6 +2285,54 @@ export interface operations {
             };
         };
     };
+    list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                battleId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["NoteReviewsResponse"];
+                };
+            };
+        };
+    };
+    write: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                battleId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WriteNoteReviewRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["NoteReviewResponse"];
+                };
+            };
+        };
+    };
     cancel: {
         parameters: {
             query?: never;
@@ -2319,7 +2501,7 @@ export interface operations {
             };
         };
     };
-    list: {
+    list_1: {
         parameters: {
             query?: {
                 unitId?: number;
@@ -2871,6 +3053,28 @@ export interface operations {
             };
         };
     };
+    opponentNotes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                battleId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["OpponentNotesResponse"];
+                };
+            };
+        };
+    };
     nicknameAvailability: {
         parameters: {
             query: {
@@ -2960,7 +3164,7 @@ export interface operations {
             };
         };
     };
-    list_1: {
+    list_2: {
         parameters: {
             query?: {
                 status?: "OPEN" | "REVIEWING" | "ACCEPTED" | "REJECTED";

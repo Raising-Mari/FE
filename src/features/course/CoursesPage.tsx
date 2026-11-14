@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/Card'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { StateBox } from '@/components/ui/StateBox'
 import type { MyCourse } from './api'
-import { CourseBanner } from './components/CourseBanner'
+import { CourseBanner } from '@/components/layout/CourseBanner'
 import { CreateCourseDialog } from './components/CreateCourseDialog'
 import { useMyCourses, useUnits } from './hooks/useCourses'
 
