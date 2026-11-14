@@ -5,7 +5,10 @@
 
 ## 지금 있는 것
 - `api.ts`·`hooks/useMe.ts`: A-06 내 정보(`['me']`). 헤더 이름·관리자 메뉴·`RequireAdmin`이 같은 키를 쓴다. 토큰이 없으면 호출하지 않는다.
-- 로그인 화면(02)·가입(03)·시작(01)은 단계 2에서 만든다. 그때까지 `/`·`/login`·`/signup`은 `router.tsx`의 자리표시다.
+- `LandingPage`(01)·`LoginPage`(02)·`SignupPage`(03)가 `/`·`/login`·`/signup`에 연결돼 있다.
+- `SignupSessionProvider`는 가입 토큰을 메모리에만 두며 가입 화면을 떠나면 지운다. 새로고침하면 다시 로그인한다.
+- `GoogleSignIn`은 Google Identity Services의 공식 버튼과 ID 토큰 콜백을 쓴다. 목업 로그인 버튼은 `env.isDev && env.useMock`일 때만 보인다.
+- 가입은 닉네임 중복 확인(350ms 지연)·학과 선택·필수 이용 안내 동의가 모두 끝나야 가능하다. 이용 안내는 사용자가 승인한 초안이며 최종 약관은 팀 검토가 남아 있다.
 
 ## 규칙
 - 로그인은 **학교 Google 계정만**이다. Google 로그인 창에서 받은 ID 토큰을 `POST /api/auth/google`(A-01)로 보내고, 서버가 학교 도메인(`hd` = `mju.ac.kr`)을 검사한다. 로그인 창에 `hd`를 힌트로 넘기는 것은 편의일 뿐이고 보안은 서버 검사가 맡는다.
