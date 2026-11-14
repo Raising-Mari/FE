@@ -1,11 +1,10 @@
 import { createBrowserRouter, type RouteObject } from 'react-router'
-import { ComingSoonPage } from '@/features/system/ComingSoonPage'
 import { NotFoundPage } from '@/features/system/NotFoundPage'
 import { SessionExpiredPage } from '@/features/system/SessionExpiredPage'
 import { env } from '@/lib/env'
 import { RequireAdmin, RequireAuth } from './guards'
 import { ProtectedLayout, PublicLayout } from './layouts'
-import { TeachRoute } from './routeElements'
+import { AdminRoute, TeachRoute } from './routeElements'
 import { LandingPage } from '@/features/auth/LandingPage'
 import { LoginPage } from '@/features/auth/LoginPage'
 import { SignupPage } from '@/features/auth/SignupPage'
@@ -42,10 +41,8 @@ const devRoutes: RouteObject[] = env.isDev
     ]
   : []
 
-const soon = (title: string) => <ComingSoonPage title={title} />
-
 /**
- * 라우트는 이 파일에서만 등록한다(주소는 계획서 부록 A). 화면을 만들 때마다 `soon(...)` 자리를 실제 페이지로 바꾼다.
+ * 라우트는 이 파일에서만 등록한다(주소는 계획서 부록 A).
  * 로그인 전 화면은 `PublicLayout`, 로그인이 필요한 화면은 `RequireAuth` → `ProtectedLayout` 아래에 둔다.
  */
 export const routes: RouteObject[] = [
@@ -84,7 +81,7 @@ export const routes: RouteObject[] = [
           { path: '/me', element: <MePage /> },
           {
             element: <RequireAdmin />,
-            children: [{ path: '/admin', element: soon('운영·문제 점검') }],
+            children: [{ path: '/admin', element: <AdminRoute /> }],
           },
         ],
       },
