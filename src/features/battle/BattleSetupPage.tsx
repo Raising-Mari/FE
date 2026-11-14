@@ -13,7 +13,7 @@ import { parseId, useCourse, useUnits } from '@/hooks/useCourseQueries'
 import { DEFAULT_QUESTIONS, MAX_QUESTIONS, MIN_QUESTIONS, normalizeRoomCode } from './api'
 import { BattleErrorNotice } from './components/BattleErrorNotice'
 import { useActiveBattle, useCreateBattle, useJoinBattle, useReadiness } from './hooks/useBattle'
-import { rememberNotesPublic } from './notesPublicPref'
+import { rememberNotesPublic } from '@/lib/notesPublicPref'
 
 const COUNTS = Array.from(
   { length: MAX_QUESTIONS - MIN_QUESTIONS + 1 },

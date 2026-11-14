@@ -16,6 +16,8 @@ import { MaterialsPage } from '@/features/material/MaterialsPage'
 import { BattleRoomPage } from '@/features/battle/BattleRoomPage'
 import { BattleSetupPage } from '@/features/battle/BattleSetupPage'
 import { JoinPage } from '@/features/battle/JoinPage'
+import { PracticeResultPage } from '@/features/review/PracticeResultPage'
+import { ReviewPage } from '@/features/review/ReviewPage'
 
 /** 개발 서버에서만 여는 화면(스타일 가이드·서버 연결 확인). 배포에서는 라우트 자체가 없다. */
 const devRoutes: RouteObject[] = env.isDev
@@ -74,8 +76,8 @@ export const routes: RouteObject[] = [
           { path: '/courses/:courseId/ranking', element: soon('과목 랭킹') },
           { path: '/join/:code', element: <JoinPage /> },
           { path: '/battles/:battleId', element: <BattleRoomPage /> },
-          { path: '/battles/:battleId/review', element: soon('결과·복기') },
-          { path: '/battles/:battleId/result', element: soon('연습 결과') },
+          { path: '/battles/:battleId/review', element: <ReviewPage /> },
+          { path: '/battles/:battleId/result', element: <PracticeResultPage /> },
           { path: '/me', element: soon('내 정보') },
           {
             element: <RequireAdmin />,
