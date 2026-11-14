@@ -13,6 +13,9 @@ import { CoursesPage } from '@/features/course/CoursesPage'
 import { CourseHomePage } from '@/features/course/CourseHomePage'
 import { RequireDisciple } from '@/features/course/RequireDisciple'
 import { MaterialsPage } from '@/features/material/MaterialsPage'
+import { BattleRoomPage } from '@/features/battle/BattleRoomPage'
+import { BattleSetupPage } from '@/features/battle/BattleSetupPage'
+import { JoinPage } from '@/features/battle/JoinPage'
 
 /** 개발 서버에서만 여는 화면(스타일 가이드·서버 연결 확인). 배포에서는 라우트 자체가 없다. */
 const devRoutes: RouteObject[] = env.isDev
@@ -63,14 +66,14 @@ export const routes: RouteObject[] = [
             element: <RequireDisciple />,
             children: [
               { path: '/courses/:courseId/teach', element: <TeachRoute /> },
-              { path: '/courses/:courseId/battle', element: soon('제자 배틀') },
+              { path: '/courses/:courseId/battle', element: <BattleSetupPage /> },
             ],
           },
           { path: '/courses/:courseId/materials', element: <MaterialsPage /> },
           { path: '/courses/:courseId/records', element: soon('배틀 기록') },
           { path: '/courses/:courseId/ranking', element: soon('과목 랭킹') },
-          { path: '/join/:code', element: soon('방 코드 입장') },
-          { path: '/battles/:battleId', element: soon('배틀') },
+          { path: '/join/:code', element: <JoinPage /> },
+          { path: '/battles/:battleId', element: <BattleRoomPage /> },
           { path: '/battles/:battleId/review', element: soon('결과·복기') },
           { path: '/battles/:battleId/result', element: soon('연습 결과') },
           { path: '/me', element: soon('내 정보') },

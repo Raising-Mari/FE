@@ -1,3 +1,4 @@
+import { resetBattleData } from './battleHandlers'
 import { resetCourseData } from './courseData'
 import { resetMaterialData } from './materialHandlers'
 import { resetTeachingData } from './teachingHandlers'
@@ -7,4 +8,5 @@ export function resetMockData() {
   resetCourseData()
   resetMaterialData()
   resetTeachingData()
+  resetBattleData()
 }

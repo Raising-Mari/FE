@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { useAuthStore } from '@/stores/authStore'
+import { resetMockData } from './reset'
 import { useScenario } from './scenario'
 
 /** 목업 모드에서 "로그인한 것처럼" 만들 때 쓰는 가짜 토큰. 실제 서버에서는 의미가 없다. */
@@ -18,7 +19,8 @@ export function DemoPanel() {
   const accessToken = useAuthStore((s) => s.accessToken)
   const setAccessToken = useAuthStore((s) => s.setAccessToken)
   const logout = useAuthStore((s) => s.logout)
-  const { role, networkDown, set, reset } = useScenario()
+  const { role, networkDown, opponentAuto, battleFail, opponentNotesPublic, set, reset } =
+    useScenario()
 
   /** 상태를 바꾼 뒤 화면이 바로 반영되도록 보이는 데이터를 다시 받는다. */
   function apply(patch: Parameters<typeof set>[0]) {
@@ -63,10 +65,27 @@ export function DemoPanel() {
             로그인 만료시키기
           </Button>
 
+          <Checkbox
+            label="배틀 상대 자동 입장·준비"
+            checked={opponentAuto}
+            onChange={(e) => apply({ opponentAuto: e.target.checked })}
+          />
+          <Checkbox
+            label="다음 배틀 풀이 실패"
+            checked={battleFail}
+            onChange={(e) => apply({ battleFail: e.target.checked })}
+          />
+          <Checkbox
+            label="시연 상대의 공개 동의"
+            checked={opponentNotesPublic}
+            onChange={(e) => apply({ opponentNotesPublic: e.target.checked })}
+          />
+
           <Button
             variant="link"
             onClick={() => {
               reset()
+              resetMockData()
               void queryClient.invalidateQueries()
             }}
           >

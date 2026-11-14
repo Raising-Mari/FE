@@ -11,12 +11,21 @@ export interface Scenario {
   networkDown: boolean
   /** true 면 로그인 상태가 필요한 모든 요청이 401(토큰 만료)로 거절된다. */
   tokenRejected: boolean
+  /** true 면 배틀 상대가 저절로 들어오고 준비한다(혼자서 흐름을 끝까지 볼 수 있게). */
+  opponentAuto: boolean
+  /** true 면 다음 배틀 풀이가 한 번 실패해 오류 화면이 된다. */
+  battleFail: boolean
+  /** 배틀 상대가 노트 공개에 동의했는가(노트 교환 리뷰). */
+  opponentNotesPublic: boolean
 }
 
 export const DEFAULT_SCENARIO: Scenario = {
   role: 'STUDENT',
   networkDown: false,
   tokenRejected: false,
+  opponentAuto: true,
+  battleFail: false,
+  opponentNotesPublic: true,
 }
 
 interface ScenarioState extends Scenario {
