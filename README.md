@@ -52,4 +52,29 @@ src/
 ```
 
 ## 배포할 때
-`VITE_API_BASE_URL`에 BE의 공개 주소(https)를 넣고 빌드합니다. 이 값은 브라우저에 그대로 공개되므로 비밀값을 넣으면 안 됩니다. BE 쪽 `CORS_ALLOWED_ORIGINS`에도 FE 주소를 추가해야 합니다.
+`main` 브랜치가 Vercel(`https://raising-mari.vercel.app`)에 배포됩니다.
+
+**1. Vercel 환경변수 (Production)** — Vite는 값을 **빌드할 때** 코드에 박습니다. 바꾼 뒤에는 반드시 Redeploy 해야 반영됩니다.
+
+| 변수 | 값 |
+|---|---|
+| `VITE_API_BASE_URL` | BE의 공개 https 주소 **앞부분만** (`https://…`). 끝 슬래시와 `/api`는 붙이지 않습니다 |
+| `VITE_GOOGLE_CLIENT_ID` | Google OAuth 클라이언트 ID (BE의 `GOOGLE_CLIENT_ID`와 같은 값) |
+| `VITE_USE_MOCK` | 설정하지 않습니다. `true`면 운영에서 목업이 켜집니다 |
+
+이 값들은 브라우저에 그대로 공개되므로 비밀값을 넣으면 안 됩니다. 두 변수가 비어 있으면 API 요청이 Vercel 자신(`/api/…`)으로 가서 전부 실패하고 로그인 버튼도 동작하지 않습니다.
+
+**2. 새로고침·직접 주소** — `vercel.json`의 rewrite가 모든 경로를 `index.html`로 보냅니다. 지우면 `/login`, `/join/코드` 같은 주소를 바로 열 때 404가 납니다.
+
+**3. BE·Google 쪽 설정** — FE 코드로는 할 수 없고 서버 관리자가 합니다.
+- BE `.env`의 `CORS_ALLOWED_ORIGINS`에 `https://raising-mari.vercel.app`을 추가합니다(쉼표 구분, 끝 슬래시 없음). Vercel 미리보기 주소는 매번 달라 허용되지 않습니다.
+- Google 클라이언트의 "승인된 JavaScript 출처"에 같은 주소를 추가합니다.
+
+**4. 배포 뒤 점검**
+```bash
+# 딥링크가 모두 200 이어야 합니다
+for P in / /login /courses /join/ABCD123; do curl -s -o /dev/null -w "$P %{http_code}\n" https://raising-mari.vercel.app$P; done
+# 번들에 API 주소가 박혔는지 (빈 문자열이면 재배포가 필요합니다)
+curl -s https://raising-mari.vercel.app/assets/<index-해시>.js | grep -oE 'apiBaseUrl:`[^`]*`'
+```
+전체 배포 절차와 진행 상태는 팀 공용 「배포 준비 계획서」를 따릅니다.
