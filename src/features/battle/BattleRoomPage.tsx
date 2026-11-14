@@ -17,7 +17,7 @@ import { toast } from '@/stores/toastStore'
 import type { Battle, BattleStatus, Participant } from './api'
 import { BattleErrorNotice } from './components/BattleErrorNotice'
 import { useBattle, useBattleActions } from './hooks/useBattle'
-import { recallNotesPublic } from './notesPublicPref'
+import { recallNotesPublic } from '@/lib/notesPublicPref'
 
 const STATUS_LABEL: Record<BattleStatus, string> = {
   WAITING: '상대 입장 대기',
