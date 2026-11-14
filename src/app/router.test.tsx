@@ -118,7 +118,9 @@ describe('관리자 가드', () => {
     signIn()
     useScenario.setState({ role: 'ADMIN' })
     renderAt('/admin')
-    expect(await screen.findByText('운영·문제 점검 화면을 준비하고 있어요')).toBeInTheDocument()
+    expect(
+      await screen.findByRole('heading', { name: '문제와 운영 상태를 살펴보세요.' }),
+    ).toBeInTheDocument()
     const nav = screen.getByRole('navigation', { name: '주 메뉴' })
     expect(within(nav).getByRole('link', { name: /운영·문제 점검/ })).toBeInTheDocument()
   })

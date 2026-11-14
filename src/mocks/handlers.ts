@@ -2,6 +2,7 @@ import { http, HttpResponse } from 'msw'
 import { MOCK_ME } from './fixtures'
 import { useScenario } from './scenario'
 import type { components } from '@/api/generated/schema'
+import { adminHandlers } from './adminHandlers'
 import { battleHandlers } from './battleHandlers'
 import { materialHandlers } from './materialHandlers'
 import { rankingHandlers } from './rankingHandlers'
@@ -192,4 +193,5 @@ export const handlers = [
   ...teachingHandlers,
   ...battleHandlers,
   ...rankingHandlers,
+  ...adminHandlers,
 ]

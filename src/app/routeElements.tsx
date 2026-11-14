@@ -1,5 +1,7 @@
+import { AdminPage } from '@/features/admin/AdminPage'
 import { useMe } from '@/features/auth/hooks/useMe'
 import { CreateUnitDialog } from '@/features/course/components/CreateUnitDialog'
+import { useSelectedCourse } from '@/features/course/hooks/useSelectedCourse'
 import { TeachPage } from '@/features/teaching/TeachPage'
 
 /**
@@ -14,4 +16,9 @@ export function TeachRoute() {
       renderCreateUnit={(props) => <CreateUnitDialog {...props} />}
     />
   )
+}
+
+/** 관리자 화면은 왼쪽 메뉴에서 고른 과목의 주차로 문항을 거르고 만든다. */
+export function AdminRoute() {
+  return <AdminPage courseId={useSelectedCourse()} />
 }

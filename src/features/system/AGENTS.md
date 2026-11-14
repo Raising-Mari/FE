@@ -8,7 +8,6 @@
 | `NotFoundPage` | 27 | 라우터에 없는 주소(`*`). 로그인 전·후 같은 화면 |
 | `SessionExpiredPage` | 28 | 서버가 토큰을 거부(401)해 `authStore.expire()`가 불린 뒤, `RequireAuth`가 `/session-expired`로 보낸다 |
 | `ForbiddenPage` | 30 | 학생이 관리자 화면을 열었을 때 `RequireAdmin`이 본문 자리에 보여 준다 |
-| `ComingSoonPage` | — | 아직 만들지 않은 화면의 **임시 자리표시**. 마지막 단계에서 모두 실제 화면으로 바꿔 지운다 |
 
 서버에 연결할 수 없을 때(시안 29)는 별도 화면이 아니라 공통 부품 `ErrorState`(`components/ui`)를 화면 본문 자리에 쓴다.
 
