@@ -9,5 +9,7 @@
 - `PublicShell`: 로그인 전 화면(첫 화면·로그인·가입). 가운데 정렬 1200px.
 - `Brand`: 헤더 왼쪽 마리 그림 + 서비스 이름(이름은 `lib/brand.ts`).
 - `NavItem`: 메뉴 한 항목. 현재 주소와 맞으면 활성 표시.
+- `PageHeader`: 본문 맨 위의 경로·제목·보조 설명·마리 배너. 로그인 뒤 화면은 모두 이것으로 시작한다.
+- `CourseBanner`: "마리와 함께, 한 걸음씩." 배너(`PageHeader`가 쓴다).
 
 이 틀들은 받은 대로 그리기만 한다. 실제로 쓰는 `PublicLayout`·`ProtectedLayout`(내 정보·메뉴 구성)은 `app/layouts.tsx`에 있다.

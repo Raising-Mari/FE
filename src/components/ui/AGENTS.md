@@ -23,6 +23,7 @@
 | `StateBox` | 로딩·에러·빈 상태를 본문 자리에 대신 놓는 상자(시안 26). **모든 기능 화면이 상태 4종을 이것으로 만든다** |
 | `ErrorState` | `StateBox` + 서버 오류 안내문(`api/errorMessages`) + 다시 시도 버튼. 서버에 못 닿으면 제목이 바뀐다(시안 29). `useQuery`의 `error`를 그대로 넘긴다 |
 | `Toast` | 알림 한 개(`info`·`error`). 띄우는 곳은 `app/ToastViewport`, 띄우는 법은 `stores/toastStore`의 `toast.info/error` |
+| `Pager` | 목록 아래의 이전·다음(0부터 세는 쪽, `hasNext`). 한 쪽뿐이면 그리지 않는다 |
 | `Field` | 새 입력 부품을 만들 때 쓰는 라벨·도움말·오류 틀 (`controlClass`로 모양을 맞춘다) |
 
 시안에 있지만 아직 만들지 않은 요소는 `docs/디자인 시스템 정리.md` 5번 항목에 있다.
